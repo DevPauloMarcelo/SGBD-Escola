@@ -1,0 +1,67 @@
+CREATE DATABASE PROJETO_ESCOLA3;
+USE PROJETO_ESCOLA3;
+
+
+CREATE TABLE PROFESSOR(
+	MATRICULA_PROF		INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    NOME_PROF    		VARCHAR(50) NOT NULL,
+	CPF_PROF			VARCHAR(15) UNIQUE,
+	TELEFONE			VARCHAR(12) NOT NULL,
+	END_LOG				VARCHAR(50) NOT NULL,
+	END_NUM				INT NOT NULL,
+	END_COMPLE			VARCHAR(50),
+	END_BAIRRO			VARCHAR(50) NOT NULL,
+	END_CIDADE			VARCHAR(50) NOT NULL,
+	END_UF				VARCHAR(2) NOT NULL,
+	END_CEP				INT NOT NULL,
+    CURSOS_MINISTRADOS	INT,
+    FOREIGN KEY (CURSOS_MINISTRADOS)
+	REFERENCES CURSO(CODIGO_CURSO)
+    );
+    
+	insert into professor (nome_prof, cpf_prof, telefone, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, cursos_ministrados) value
+	('Isadora', '00011122255', '8598785687', 'Av. Santos Dumont', '3000', 'Torre III', 'Aldeota', 'Fortaleza', 'CE', '65585922', 1);    
+	insert into professor (nome_prof, cpf_prof, telefone, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, cursos_ministrados) value
+	('Valentina', '88811122255', '8598785887', 'Av. General João', '3550', 'Torre I', 'Varjota', 'Fortaleza', 'CE', '65585892', 2);
+    insert into professor (nome_prof, cpf_prof, telefone, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, cursos_ministrados) value
+	('Marcos', '88811122242', '9198785887', 'Av. Bezerra de Menezes', '40', 'Casa 05', 'Centro', 'Belém', 'PA', '84585892', 3);
+    insert into professor (nome_prof, cpf_prof, telefone, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, cursos_ministrados) value
+	('Marcelo', '22811122255', '2298785887', 'Rua das Flores', '45', 'Casa 1', 'Floresta', 'Fortaleza', 'CE', '65585888', 7);
+	insert into professor (nome_prof, cpf_prof, telefone, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, cursos_ministrados) value
+	('Sebastião', '99988877725', '23885566', 'Rua das Rosas', '50', 'Casa 8', 'Floresta', 'Fortaleza', 'CE', '65585888', 5);
+        
+	select * from professor;
+    
+    
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE LECIONADOS (
+	ID				INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    HORARIO			VARCHAR (10),
+    IDPROFESSOR		INT,
+	FOREIGN KEY (IDPROFESSOR)
+	REFERENCES PROFESSOR(MATRICULA_PROF),
+    IDCURSO			INT,
+    FOREIGN KEY (IDCURSO)
+	REFERENCES CURSO(CODIGO_CURSO)
+);
+
+insert into lecionados values (default, 'Manhã', 1, 3);
+insert into lecionados values (default, 'Tarde', 2, 1);
+insert into lecionados values (default, 'Manhã', 5, 4);
+insert into lecionados values (default, 'Noite', 5, 2);
+insert into lecionados values (default, 'Manhã', 3, 7);
+insert into lecionados values (default, 'Tarde', 1, 1);
+
+select * from lecionados;
+
+
+
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
+select P.NOME_PROF AS Professor, C.NOME_CURSO as Curso, L.HORARIO as Horário
+from PROFESSOR P
+join LECIONADOS L on P.MATRICULA_PROF = L.IDPROFESSOR 
+join CURSO C on C.CODIGO_CURSO = L.IDCURSO;
+-- -------------------------------------------------------------------------------------------------------------------------------------------------
+
+

@@ -1,0 +1,39 @@
+-- TABELA FUNCIONARIO E DEPARTAMENTO (COMPLETO)
+
+CREATE TABLE FUNCIONARIO (
+MATRICULA_FUNC		INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+NOME_FUNC			VARCHAR(30),
+COD_DEP				INT NOT NULL,
+					FOREIGN KEY (COD_DEP) REFERENCES DEPARTAMENTO(COD_DEP),
+COD_ESCOLA			INT NOT NULL,
+					FOREIGN KEY (COD_ESCOLA) REFERENCES ESCOLA(CODIGO),
+CARGO				VARCHAR (30)
+);
+
+insert into funcionario value (default, 'Francisco', 1, 1, 'Agente Administrativo');
+insert into funcionario value (default, 'Maria', 2, 1, 'Publicitária');
+insert into funcionario value (default, 'Teodoro', 3, 1, 'Zelador');
+insert into funcionario value (default, 'Leonardo', 4, 1, 'Coodernador');
+insert into funcionario value (default, 'David', 5, 1, 'Diretor');
+insert into funcionario value (default, 'Lucia', 6, 1, 'Programador');
+
+select * from funcionario;
+
+
+
+select F.MATRICULA_FUNC AS Matrícula, F.NOME_FUNC as nome, D.NOME AS Setor, F.CARGO AS Cargo
+from FUNCIONARIO F
+join DEPARTAMENTO D on F.MATRICULA_FUNC = D.COD_DEP;
+
+-- ------------------------------------------------------------------------------------------------------
+CREATE TABLE DEPARTAMENTO (
+COD_DEP		INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+NOME		VARCHAR (30)
+);
+
+insert into departamento value (default, 'RH');
+insert into departamento value (default, 'Mkt');
+insert into departamento value (default, 'Zeladoria');
+insert into departamento value (default, 'Coordenação Curso');
+insert into departamento value (default, 'Diretoria');
+insert into departamento value (default, 'TI');

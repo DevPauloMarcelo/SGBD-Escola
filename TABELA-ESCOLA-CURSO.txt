@@ -1,0 +1,35 @@
+CREATE TABLE ESCOLA (
+CODIGO		INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+NOME		VARCHAR(20)
+);
+
+insert into escola values (default, 'Escola de Devs');
+
+
+select * from escola;
+
+-- -----------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE CURSO (
+      CODIGO_CURSO 			INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+      NOME_CURSO 			VARCHAR(50)     
+);
+
+Insert into curso (nome_curso) values ("Java");
+Insert into curso (nome_curso) values ("CSS3");
+Insert into curso (nome_curso) values ("HTML5");
+Insert into curso (nome_curso) values ("Redes");
+Insert into curso (nome_curso) values ("Sistema Operacional");
+Insert into curso (nome_curso) values ("Hardware");
+Insert into curso (nome_curso) values ("MySQL");
+Insert into curso (nome_curso) values ("Lógica de Programação");
+
+ALTER TABLE CURSO ADD ESCOLA INT;
+ALTER TABLE CURSO ADD FOREIGN KEY (ESCOLA)
+REFERENCES ESCOLA(CODIGO);
+UPDATE CURSO SET ESCOLA = 1 where CODIGO_CURSO > 0;
+
+select * from curso;
+
+-- -----------------------------------------------------------------------------------------------------------------------
+select curso.codigo_curso as Código, curso.nome_curso as Curso, escola.nome as Escola from curso join escola;

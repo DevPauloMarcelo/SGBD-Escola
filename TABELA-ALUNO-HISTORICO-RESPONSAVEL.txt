@@ -1,0 +1,86 @@
+CREATE TABLE HISTORICO (
+	CODIGO_HIST 			INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    ID_ALUNO				INT NOT NULL, 
+							FOREIGN KEY (ID_ALUNO) REFERENCES ALUNO(MAT_AL),
+	ID_CURSO 				INT NOT NULL, 
+							FOREIGN KEY (ID_CURSO) REFERENCES CURSO(CODIGO_CURSO),
+	NOTA					DECIMAL(3,2) NOT NULL,
+    FALTAS					DECIMAL(3,2) NOT NULL,
+	SITUACAO				VARCHAR(12) NOT NULL      
+);
+
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (1, 1, 8, 3.5, 'Aprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (2, 1, 9, 4, 'Aprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (3, 2, 7, 1, 'Aprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (4, 7, 6, 5, 'Aprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (5, 5, 5, 3.5, 'Reprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (1, 2, 9, 5.5, 'Aprovado');
+Insert into historico (id_aluno, id_curso, nota, faltas, situacao) values (2, 6, 1, 2, 'Reprovado');
+
+select * from historico;
+
+
+-- ------------------------------------------------------------------------------------------------------
+
+CREATE TABLE ALUNO (
+		MAT_AL			INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+		NOME    		VARCHAR(50) NOT NULL,
+        CPF				VARCHAR(15) UNIQUE,
+        DAT_NASC		DATE NOT NULL,		
+        END_LOG			VARCHAR(50) NOT NULL,
+        END_NUM			INT NOT NULL,
+        END_COMPLE		VARCHAR(50),
+        END_BAIRRO		VARCHAR(50) NOT NULL,
+        END_CIDADE		VARCHAR(50) NOT NULL,
+        END_UF			VARCHAR(2) NOT NULL,
+        END_CEP			INT NOT NULL,
+        TELEFONE		VARCHAR(12) NOT NULL,
+        ID_HISTORICO	INT,
+						FOREIGN KEY (ID_HISTORICO) REFERENCES CURSO(CODIGO_CURSO),
+		ID_RESPONSAVEL	INT,
+						FOREIGN KEY (ID_RESPONSAVEL) REFERENCES RESPONSAVEL(COD_RESPONSAVEL)
+		);
+        
+Insert into aluno (nome, cpf, dat_nasc, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, telefone, id_historico, id_responsavel) values 
+("João", "0123456789", "2005-01-25", "Rua das Flores", "20", "Casa A", "Floresta", "Fortaleza", "CE", "60887982", "85998785855", 1, 1);
+Insert into aluno (nome, cpf, dat_nasc, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, telefone, id_historico, id_responsavel) values 
+("Maria", "7893456789", "2008-01-15", "Rua das Rosas", "25", "Casa B", "Pântano", "Fortaleza", "CE", "60887970", "88888785855", 2, 2);
+Insert into aluno (nome, cpf, dat_nasc, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, telefone, id_historico, id_responsavel) values 
+("Francisco", "4444456789",  "2010-10-30", "Rua das Mesas", "1001", "AP3", "Madeira", "Limoeiro", "CE", "61887789", "85998787412", 5, 4);
+Insert into aluno (nome, cpf, dat_nasc, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, telefone, id_historico, id_responsavel) values 
+("Marcos", "7123456755", "2008-10-15", "Rua Nossa Senhora", "80", "Casa 32", "Igreja", "Fortaleza", "CE", "60887988", "025255", 3, 5);
+Insert into aluno (nome, cpf, dat_nasc, end_log, end_num, end_comple, end_bairro, end_cidade, end_uf, end_cep, telefone, id_historico, id_responsavel) values 
+("Marcelo", "0123858522", "2012-08-08", "Rua Cristo Redentor", "900", "Ap 1001", "Serra Grande", "Rio de Janeiro", "RJ", "95852888", "85985885822", 7, 3);
+
+select * from aluno;
+
+-- ------------------------------------------------------------------------------------------------------
+
+CREATE TABLE RESPONSAVEL (
+		COD_RESPONSAVEL	INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+		NOME_RESP		VARCHAR(50) NOT NULL,
+        CPF_RESP		VARCHAR(15) NOT NULL,
+        TELEFONE_RESP	VARCHAR(12) NOT NULL,
+        END_LOG_RESP	VARCHAR(50) NOT NULL,
+        END_NUM_RESP	INT NOT NULL,
+        END_COMPLE_RESP	VARCHAR(30),
+        END_BAIRRO_RESP	VARCHAR(20) NOT NULL,
+        END_CIDADE_RESP	VARCHAR(50) NOT NULL,
+        END_UF_RESP		VARCHAR(2) NOT NULL,
+        END_CEP_RESP	INT NOT NULL
+);
+
+insert into responsavel values (default, "Germana", "7123456789", "002255", "Rua das Flores", "20", "Casa A", "Floresta", "Fortaleza", "CE", "60887982");
+insert into responsavel values (default, "Lucina", "9999996789", "555255", "Rua das Rosas", "25", "Casa B", "Pântano", "Fortaleza", "CE", "60887970");
+insert into responsavel values (default, "Mariana", "7123453216", "882255", "Rua das Mesas", "1001", "AP3", "Madeira", "Limoeiro", "CE", "61887789");
+insert into responsavel values (default, "Paulo", "7123456755", "025255", "Rua Nossa Senhora", "80", "Casa 32", "Igreja", "Fortaleza", "CE", "60887988");
+insert into responsavel values (default, "Marcelo ", "712348954", "022587", "Rua Cristo Redentor", "900", "Ap 1001", "Serra Grande", "Rio de Janeiro", "RJ", "95852888");
+
+select * from responsavel;
+
+-- ------------------------------------------------------------------------------------------------------
+-- HISTORICO
+select A.NOME, C.NOME_CURSO, H.NOTA, H.FALTAS, H.SITUACAO
+from ALUNO A
+join HISTORICO H on A.MAT_AL = H.ID_ALUNO 
+join CURSO C on C.CODIGO_CURSO = H.ID_CURSO;
